@@ -35,19 +35,42 @@ html, body {
 }
 
 .blue {
-    background: url(../images/Ballon-Generic-Blue.png) center;
+    background: url(../images/Balloon-Blue.png) center;
     width: 138px;
     height: 182px;
 }
 
 .red {
-    background: url(../images/Ballon-Generic-Red.png) center;
+    background: url(../images/Balloon-Red.png) center;
     width: 132px;
     height: 182px;
 }
 
 .yellow {
-    background: url(../images/Ballon-Generic-Yellow.png) center;
-    width: 128px;
+    background: url(../images/Balloon-Yellow.png) center;
+    width: 132px;
     height: 182px;
+}
+
+.orange {
+    background: url(../images/Balloon-Orange.png) center;
+    width: 130px;
+    height: 170px;
+}
+
+.purple {
+    background: url(../images/Balloon-Purple.png) center;
+    width: 130px;
+    height: 182px;
+}
+
+.green {
+    background: url(../images/Balloon-Green.png) center;
+    width: 130px;
+    height: 182px;
+}
+
+.explode {
+    opacity: 0;
+    transform: scale(3) rotate(10deg);
 }

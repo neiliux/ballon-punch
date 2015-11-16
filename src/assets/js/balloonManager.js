@@ -2,6 +2,7 @@ var balloonManager = (function(scoreManager) {
     var balloons = [];
     var activeBalloonsCount = 0;
     var maxBalloonWidth = 100;
+    var balloonPopSound = new Audio('assets/audio/balloon-popping.wav');
 
     function initialize(canvas) {
         console.log('bm init');
@@ -27,6 +28,9 @@ var balloonManager = (function(scoreManager) {
                     balloonRef.active = false;
                     balloonRef.domElement.top = getCanvasHeight();
                     scoreManager.addToScore(balloonRef);
+
+                    //balloonRef.className += 'explode';
+                    balloonPopSound.play();
                 };
             })();
 
@@ -95,13 +99,19 @@ var balloonManager = (function(scoreManager) {
     }
 
     function setColor(balloon, colorIndex) {
-        balloon.color =  colorIndex || getRandomNumber(0, 15);
+        balloon.color =  colorIndex || getRandomNumber(0, 26);
         if (balloon.color <= 5) {
-            balloon.domElement.className += ' blue';
+            balloon.domElement.className += ' purple';
         } else if (balloon.color <= 10) {
-            balloon.domElement.className += ' red';
-        } else {
+            balloon.domElement.className += ' orange';
+        } else if (balloon.color <= 15) {
             balloon.domElement.className += ' yellow';
+        } else if (balloon.color <= 20) {
+            balloon.domElement.className += ' red';
+        } else if (balloon.color <= 25) {
+            balloon.domElement.className += ' green';
+        } else {
+            balloon.domElement.className += ' blue';
         }
     }
 
