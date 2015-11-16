@@ -1,4 +1,4 @@
-var balloonManager = (function() {
+var balloonManager = (function(scoreManager) {
     var balloons = [];
     var activeBalloonsCount = 0;
     var maxBalloonWidth = 100;
@@ -26,6 +26,7 @@ var balloonManager = (function() {
                 balloonRef.domElement.onclick = function() {
                     balloonRef.active = false;
                     balloonRef.domElement.top = getCanvasHeight();
+                    scoreManager.addToScore(balloonRef);
                 };
             })();
 
@@ -44,6 +45,7 @@ var balloonManager = (function() {
 
                 if (balloon.top < -10) {
                     balloonReset(balloon);
+                    scoreManager.removeFromScore(balloon);
                     continue;
                 }
 
@@ -109,4 +111,4 @@ var balloonManager = (function() {
         getActiveBalloons: getActiveBalloons,
         activateBalloon: activateBalloon
     };
-}());
+}(window.scoreManager));

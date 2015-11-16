@@ -21,15 +21,16 @@ html, body {
     left: 0;
 }
 
+#score {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+}
+
 .balloon {
     -webkit-transform: translate3d(0px,0px,0px);
     position: absolute;
-    /*
-    height: 408px;
-    width: 300px;
-    */
-
-
     background-size: contain;
 }
 
