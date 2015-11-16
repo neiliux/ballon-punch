@@ -9,7 +9,7 @@ var game = (function(balloonManager) {
 
     function start() {
         function render() {
-            console.log('render');
+            //console.log('render');
             balloonManager.moveBalloons();
 
             if (balloonManager.getActiveBalloons() < maxBalloons) {

@@ -2,7 +2,6 @@ var balloonManager = (function() {
     var balloons = [];
     var activeBalloonsCount = 0;
     var maxBalloonWidth = 100;
-    var balloonHeight = 100;
 
     function initialize(canvas) {
         console.log('bm init');
@@ -11,24 +10,26 @@ var balloonManager = (function() {
                 id: i,
                 top: getCanvasHeight(),
                 left: 0,
-                color: 1,
-                speed: 0.5,
+                color: getRandomNumber(0, 15),
+                speed: getRandomNumber(1, 5),
                 domElement: document.createElement("div"),
                 active: false
             };
 
             balloon.domElement.className = 'balloon';
-            balloon.domElement.setAttribute('balloon-id', balloon.id.toString());
             balloon.domElement.style.top = balloon.top + 'px';
-            balloon.domElement.onclick = function() {
-                var balloon = balloons[parseInt(this.getAttribute('balloon-id'))];
-                balloon.active = false;
-                balloon.domElement.top = getCanvasHeight();
-                console.log('b');
-            };
+            setColor(balloon);
+
+            (function() {
+                var balloonRef = balloon;
+
+                balloonRef.domElement.onclick = function() {
+                    balloonRef.active = false;
+                    balloonRef.domElement.top = getCanvasHeight();
+                };
+            })();
 
             balloons.push(balloon);
-
             canvas.appendChild(balloon.domElement);
         }
     }
@@ -43,6 +44,7 @@ var balloonManager = (function() {
 
                 if (balloon.top < -10) {
                     balloonReset(balloon);
+                    continue;
                 }
 
                 balloon.top -= balloon.speed;
@@ -65,6 +67,8 @@ var balloonManager = (function() {
                 balloon.left = getStartingLeftPosition();
                 balloon.domElement.style.top = balloon.top + 'px';
                 balloon.domElement.style.left = balloon.left + 'px';
+                balloon.domElement.className = 'balloon';
+                setColor(balloon);
                 return;
             }
         }
@@ -86,6 +90,17 @@ var balloonManager = (function() {
 
     function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function setColor(balloon, colorIndex) {
+        balloon.color =  colorIndex || getRandomNumber(0, 15);
+        if (balloon.color <= 5) {
+            balloon.domElement.className += ' blue';
+        } else if (balloon.color <= 10) {
+            balloon.domElement.className += ' red';
+        } else {
+            balloon.domElement.className += ' yellow';
+        }
     }
 
     return {
