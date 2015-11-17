@@ -28,10 +28,35 @@ html, body {
     font-size: 20px;
 }
 
+.cloud1, .cloud2 {
+    position: absolute;
+    -webkit-transform: translate3d(0,0,0);
+    z-index: 10;
+}
+
+.cloud1 {
+    background: url(../images/cloud1.png) center;
+    background-size: cover;
+    width: 300px;
+    height: 154px;
+    top: 100px;
+    left: 400px;
+}
+
+.cloud2 {
+    background: url(../images/cloud2.png) center;
+    background-size: cover;
+    width: 155px;
+    height: 96px;
+    top: 400px;
+    left: 500px;
+}
+
 .balloon {
     -webkit-transform: translate3d(0px,0px,0px);
     position: absolute;
     background-size: contain;
+    z-index: 1000;
 }
 
 .blue {
@@ -70,7 +95,15 @@ html, body {
     height: 182px;
 }
 
-.explode {
-    opacity: 0;
-    transform: scale(3) rotate(10deg);
+.exploding {
+    -webkit-animation: spin 1s;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% {
+        -webkit-transform: rotate(360deg);
+        width: 0;
+        height: 0;
+    }
 }

@@ -3,6 +3,7 @@ var balloonManager = (function(scoreManager) {
     var activeBalloonsCount = 0;
     var maxBalloonWidth = 100;
     var balloonPopSound = new Audio('assets/audio/balloon-popping.wav');
+    var balloonWaterSound = new Audio('assets/audio/balloon-water.wav');
 
     function initialize(canvas) {
         console.log('bm init');
@@ -25,12 +26,17 @@ var balloonManager = (function(scoreManager) {
                 var balloonRef = balloon;
 
                 balloonRef.domElement.onclick = function() {
-                    balloonRef.active = false;
-                    balloonRef.domElement.top = getCanvasHeight();
+                    balloonRef.isExploding = true;
+                    balloonRef.domElement.className += ' exploding';
                     scoreManager.addToScore(balloonRef);
-
-                    //balloonRef.className += 'explode';
                     balloonPopSound.play();
+
+                    setTimeout(function () {
+                        balloonRef.active = false;
+                        balloonRef.isExploding = false;
+                        balloonRef.domElement.top = getCanvasHeight();
+                        balloonRef.domElement.style.top = balloon.top + 'px';
+                    }, 1000);
                 };
             })();
 
@@ -44,12 +50,13 @@ var balloonManager = (function(scoreManager) {
 
         for (var i=0; i<balloons.length; i++) {
             var balloon = balloons[i];
-            if (balloon.active) {
+            if (balloon.active && !balloon.isExploding) {
                 activeBalloonsCount++;
 
-                if (balloon.top < -10) {
+                if (balloon.top < -200) {
                     balloonReset(balloon);
                     scoreManager.removeFromScore(balloon);
+                    balloonWaterSound.play();
                     continue;
                 }
 
@@ -65,7 +72,7 @@ var balloonManager = (function(scoreManager) {
 
     function activateBalloon() {
         for (var i=0; i<balloons.length; i++) {
-            if (!balloons[i].active) {
+            if (!balloons[i].active && !balloons[i].isExploding) {
                 var balloon = balloons[i];
                 balloon.speed = getRandomNumber(1, 5);
                 balloon.active = true;
@@ -82,6 +89,7 @@ var balloonManager = (function(scoreManager) {
 
     function balloonReset(balloon) {
         balloon.active = false;
+        balloon.isExploding = false;
         activeBalloonsCount--;
     }
 

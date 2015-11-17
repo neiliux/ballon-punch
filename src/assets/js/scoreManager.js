@@ -8,8 +8,8 @@ var scoreManager = (function() {
     }
 
     function removeFromScore(balloon) {
-        //score -= parseInt(balloon.speed * 20);
-        //updateScore();
+        score -= Math.max(0, balloon.speed * 5);
+        updateScore();
     }
 
     function updateScore() {
