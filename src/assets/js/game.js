@@ -1,16 +1,18 @@
-var game = (function(balloonManager, cloudManager) {
+var game = (function(balloonManager, cloudManager, soundManager) {
     var canvas = document.getElementsByClassName('canvas')[0];
     var maxBalloons = 5;
 
     function initialize() {
         console.log('init');
+        soundManager.initialize();
         cloudManager.initialize(canvas);
         balloonManager.initialize(canvas);
     }
 
     function start() {
-        function render() {
+        function render(time) {
             //console.log('render');
+            console.log(time);
             balloonManager.moveBalloons();
             cloudManager.moveClouds();
             cloudManager.refreshClouds();
@@ -29,4 +31,4 @@ var game = (function(balloonManager, cloudManager) {
         initialize: initialize,
         start: start
     };
-}(window.balloonManager, window.cloudManager));
+}(window.balloonManager, window.cloudManager, window.soundManager));

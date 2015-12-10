@@ -1,9 +1,7 @@
-var balloonManager = (function(scoreManager) {
+var balloonManager = (function(scoreManager, soundManager) {
     var balloons = [];
     var activeBalloonsCount = 0;
     var maxBalloonWidth = 100;
-    var balloonPopSound = new Audio('assets/audio/balloon-popping.wav');
-    var balloonWaterSound = new Audio('assets/audio/balloon-water.wav');
 
     function initialize(canvas) {
         console.log('bm init');
@@ -29,7 +27,7 @@ var balloonManager = (function(scoreManager) {
                     balloonRef.isExploding = true;
                     balloonRef.domElement.className += ' exploding';
                     scoreManager.addToScore(balloonRef);
-                    balloonPopSound.play();
+                    soundManager.playPop();
 
                     setTimeout(function () {
                         balloonRef.active = false;
@@ -56,7 +54,7 @@ var balloonManager = (function(scoreManager) {
                 if (balloon.top < -200) {
                     balloonReset(balloon);
                     scoreManager.removeFromScore(balloon);
-                    balloonWaterSound.play();
+                    soundManager.playLost();
                     continue;
                 }
 
@@ -129,4 +127,4 @@ var balloonManager = (function(scoreManager) {
         getActiveBalloons: getActiveBalloons,
         activateBalloon: activateBalloon
     };
-}(window.scoreManager));
+}(window.scoreManager, window.soundManager));
