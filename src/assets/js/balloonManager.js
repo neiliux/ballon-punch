@@ -2,6 +2,7 @@ var balloonManager = (function(scoreManager, soundManager) {
     var balloons = [];
     var activeBalloonsCount = 0;
     var maxBalloonWidth = 100;
+    var maxBalloons = 5;
 
     function initialize(canvas) {
         console.log('bm init');
@@ -130,11 +131,18 @@ var balloonManager = (function(scoreManager, soundManager) {
         }
     }
 
+    function refreshBalloons() {
+        if (getActiveBalloons() < maxBalloons) {
+            activateBalloon();
+        }
+    }
+
     return {
         initialize: initialize,
         moveBalloons: moveBalloons,
         getActiveBalloons: getActiveBalloons,
         activateBalloon: activateBalloon,
-        render: render
+        render: render,
+        refreshBalloons: refreshBalloons
     };
 }(window.scoreManager, window.soundManager));

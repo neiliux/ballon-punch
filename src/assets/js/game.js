@@ -1,10 +1,8 @@
 var game = (function(balloonManager, cloudManager, soundManager) {
     var canvas = document.getElementsByClassName('canvas')[0];
-    var maxBalloons = 5;
     var fpsElement = document.getElementById('fps');
 
     function initialize() {
-        console.log('init');
         soundManager.initialize();
         cloudManager.initialize(canvas);
         balloonManager.initialize(canvas);
@@ -24,19 +22,15 @@ var game = (function(balloonManager, cloudManager, soundManager) {
 
             while (delta >= timestep) {
                 balloonManager.moveBalloons(timestep);
+                balloonManager.refreshBalloons();
                 cloudManager.moveClouds(timestep);
                 cloudManager.refreshClouds(timestep);
                 delta -= timestep;
             }
 
-            if (balloonManager.getActiveBalloons() < maxBalloons) {
-                balloonManager.activateBalloon();
-            }
-
-            updateFps(time);
-
             balloonManager.render();
             cloudManager.render();
+            updateFps(time);
             renderFps();
 
             window.requestAnimationFrame(render);
