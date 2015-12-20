@@ -46,7 +46,7 @@ var balloonManager = (function(scoreManager, soundManager) {
     function moveBalloons(timestep) {
         activeBalloonsCount = 0;
         balloons.forEach(function(balloon) {
-            if (!balloon.active && balloon.isExploding) {
+            if (!balloon.active || balloon.isExploding) {
                 return;
             }
 
