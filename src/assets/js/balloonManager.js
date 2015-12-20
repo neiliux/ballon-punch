@@ -5,7 +5,6 @@ var balloonManager = (function(scoreManager, soundManager) {
     var maxBalloons = 5;
 
     function initialize(canvas) {
-        console.log('bm init');
         for (var i=0; i<30; i++) {
             var balloon = {
                 id: i,
@@ -46,32 +45,28 @@ var balloonManager = (function(scoreManager, soundManager) {
 
     function moveBalloons(timestep) {
         activeBalloonsCount = 0;
-
-        for (var i=0; i<balloons.length; i++) {
-            var balloon = balloons[i];
-            if (balloon.active && !balloon.isExploding) {
-                activeBalloonsCount++;
-
-                if (balloon.top < -200) {
-                    balloonReset(balloon);
-                    scoreManager.removeFromScore(balloon);
-                    soundManager.playLost();
-                    continue;
-                }
-
-                balloon.top -= balloon.speed * timestep;
-                //balloon.domElement.style.top = balloon.top + 'px';
+        balloons.forEach(function(balloon) {
+            if (!balloon.active && balloon.isExploding) {
+                return;
             }
-        }
+
+            activeBalloonsCount++;
+            if (balloon.top < -200) {
+                balloonReset(balloon);
+                scoreManager.removeFromScore(balloon);
+                soundManager.playLost();
+            }
+
+            balloon.top -= balloon.speed * timestep;
+        });
     }
 
     function render() {
-        for (var i=0; i<balloons.length; i++) {
-            var balloon = balloons[i];
+        balloons.forEach(function(balloon) {
             if (balloon.active && !balloon.isExploding) {
                 balloon.domElement.style.top = balloon.top + 'px';
             }
-        }
+        });
     }
 
     function getActiveBalloons() {
