@@ -3,12 +3,12 @@ var scoreManager = (function() {
     var domElement = document.getElementById('score');
 
     function addToScore(balloon) {
-        score += parseInt(balloon.speed * 10);
+        score += parseInt((balloon.speed*100) * 10);
         updateScore();
     }
 
     function removeFromScore(balloon) {
-        score -= Math.max(0, balloon.speed * 5);
+        score -= Math.max(0, (balloon.speed*100) * 5);
         updateScore();
     }
 

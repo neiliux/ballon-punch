@@ -43,7 +43,7 @@ var balloonManager = (function(scoreManager, soundManager) {
         }
     }
 
-    function moveBalloons() {
+    function moveBalloons(timestep) {
         activeBalloonsCount = 0;
 
         for (var i=0; i<balloons.length; i++) {
@@ -58,7 +58,16 @@ var balloonManager = (function(scoreManager, soundManager) {
                     continue;
                 }
 
-                balloon.top -= balloon.speed;
+                balloon.top -= balloon.speed * timestep;
+                //balloon.domElement.style.top = balloon.top + 'px';
+            }
+        }
+    }
+
+    function render() {
+        for (var i=0; i<balloons.length; i++) {
+            var balloon = balloons[i];
+            if (balloon.active && !balloon.isExploding) {
                 balloon.domElement.style.top = balloon.top + 'px';
             }
         }
@@ -72,7 +81,7 @@ var balloonManager = (function(scoreManager, soundManager) {
         for (var i=0; i<balloons.length; i++) {
             if (!balloons[i].active && !balloons[i].isExploding) {
                 var balloon = balloons[i];
-                balloon.speed = getRandomNumber(1, 5);
+                balloon.speed = getRandomNumber(8, 15) / 100;
                 balloon.active = true;
                 balloon.top = getCanvasHeight();
                 balloon.left = getStartingLeftPosition();
@@ -125,6 +134,7 @@ var balloonManager = (function(scoreManager, soundManager) {
         initialize: initialize,
         moveBalloons: moveBalloons,
         getActiveBalloons: getActiveBalloons,
-        activateBalloon: activateBalloon
+        activateBalloon: activateBalloon,
+        render: render
     };
 }(window.scoreManager, window.soundManager));

@@ -17,7 +17,7 @@ var soundManager = (function() {
         if (popIndex >= popAudio.length) {
             popIndex = 0;
         }
-        popAudio[popIndex].play();
+        //popAudio[popIndex].play();
     }
 
     function playLost() {
@@ -25,7 +25,7 @@ var soundManager = (function() {
         if (lostIndex >= lostAudio.length) {
             lostIndex = 0;
         }
-        lostAudio[lostIndex].play();
+        //lostAudio[lostIndex].play();
     }
 
     return {

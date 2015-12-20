@@ -13,20 +13,23 @@ var cloudManager = (function() {
         createStaticClouds();
     }
 
-    function moveClouds() {
+    function moveClouds(delta) {
         clouds.forEach(function(cloud) {
             if (cloud.sleep > 0) {
                 cloud.sleep--;
                 return;
             }
 
-            cloud.left += cloud.speed;
+            cloud.left += cloud.speed * delta;
 
             if (cloud.left > getMaxWidth() + 20) {
                 removeCloud(cloud);
-                return;
             }
+        });
+    }
 
+    function render() {
+        clouds.forEach(function(cloud) {
             cloud.domElement.style.left = cloud.left + 'px';
         });
     }
@@ -62,7 +65,7 @@ var cloudManager = (function() {
     function createCloud(isStaticCloud) {
         var cloud = {
             type: getRandomNumber(1, 2),
-            speed: getRandomNumber(0.5, 1.5),
+            speed: getRandomNumber(5, 15) / 100,
             top: getRandomNumber(50, getMaxHeight()),
             left: isStaticCloud ? getRandomNumber(30, getMaxHeight()) : -300,
             sleep: getRandomNumber(1, 1000),
@@ -98,6 +101,7 @@ var cloudManager = (function() {
         initialize: initialize,
         moveClouds: moveClouds,
         activeCloudCount: activeCloudCount,
-        refreshClouds: refreshClouds
+        refreshClouds: refreshClouds,
+        render: render
     };
 }());
